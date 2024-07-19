@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react"
 import Button from "@/components/Button"
-import { useGameStore } from "../stores/useGameStore"
 import { useRouter } from "next/navigation"
+import { Analytics } from "@vercel/analytics/react"
+import { useGameStore } from "../stores/useGameStore"
 import Input from "@/components/Input"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
@@ -68,6 +69,7 @@ const Home: React.FC = () => {
         }
       </div>
       <Footer />
+      <Analytics />
     </div>
   )
 }
