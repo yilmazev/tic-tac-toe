@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply !uppercase !font-extrabold transition-all duration-150 outline-none focus-visible:border-primary-950
+}
+
+body {
+  @apply select-none bg-[url("/images/bg-pattern.png")] bg-primary-500 text-white text-lg
+}
+
+.cell.filled {
+  cursor: not-allowed;
+}
+
+.winner {
+  margin-top: 20px;
+  font-size: 24px;
+  text-align: center;
+}
