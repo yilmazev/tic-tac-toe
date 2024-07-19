@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import { Nunito } from "next/font/google"
 import "../styles/globals.css"
+import { Analytics } from "@vercel/analytics/react"
 
-const nunito = Nunito({ subsets: [ "latin" ] })
+const nunito = Nunito({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Infinite Tic Tac Toe",
@@ -12,7 +13,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={nunito.className}>{children}</body>
+      <body className={nunito.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
