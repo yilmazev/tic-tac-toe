@@ -3,7 +3,7 @@ import { Nunito } from "next/font/google"
 import "../styles/globals.css"
 import { Analytics } from "@vercel/analytics/react"
 
-const nunito = Nunito({ subsets: ["latin"] })
+const nunito = Nunito({ subsets: [ "latin" ] })
 
 export const metadata: Metadata = {
   title: "Infinite Tic Tac Toe",
