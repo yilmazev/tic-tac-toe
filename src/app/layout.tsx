@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Nunito } from "next/font/google"
 import "../styles/globals.css"
 
-const nunito = Nunito({ subsets: ["latin"] })
+const nunito = Nunito({ subsets: [ "latin" ] })
 
 export const metadata: Metadata = {
   title: "Infinite Tic Tac Toe",
