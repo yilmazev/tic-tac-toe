@@ -10,16 +10,16 @@ import Header from "@/components/Header"
 import LanguageSwitcher from "./components/LanguageSwitcher"
 import { useTranslations } from "next-intl"
 
-interface LoginProps {
+interface HomeProps {
   lang: string
 }
 
-const Home: React.FC<LoginProps> = ({ lang }) => {
+const Home: React.FC<HomeProps> = ({ lang }) => {
   const t = useTranslations()
   const router = useRouter()
 
   const { mode, setMode, setPlayerNames, loadPlayerNames, player1Name, player2Name, updatePlayer1Name, updatePlayer2Name } = useGameStore()
-  const [ isButtonDisabled, setIsButtonDisabled ] = useState(true)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
   useEffect(() => {
     setMode(null)
@@ -27,11 +27,11 @@ const Home: React.FC<LoginProps> = ({ lang }) => {
 
   useEffect(() => {
     loadPlayerNames()
-  }, [ loadPlayerNames ])
+  }, [loadPlayerNames])
 
   useEffect(() => {
     setIsButtonDisabled(!player1Name.trim() || !player2Name.trim())
-  }, [ player1Name, player2Name ])
+  }, [player1Name, player2Name])
 
   const handleModeSelect = (selectedMode: "bot" | "pvp") => {
     setMode(selectedMode)
