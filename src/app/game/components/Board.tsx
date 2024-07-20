@@ -223,10 +223,7 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
           const isWinningCell = winningCells && winningCells.includes(index)
           const isNextMove = mode === "bot" && isXNext && cell === "X" && index === nextMoveIndex
 
-          const outerClassName = clsx(
-            "rounded-[14px] p-0.5 pb-2",
-            isWinningCell ? "" : isNextMove && "bg-white"
-          )
+          const outerClassName = clsx("rounded-[14px] p-0.5 pb-2", isWinningCell ? "" : isNextMove && "bg-white")
 
           const innerClassName = clsx(
             "flex size-[12vh] items-center justify-center rounded-[14px] border-2 border-primary-950 shadow-bo lg:size-[120px]",
