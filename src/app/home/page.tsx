@@ -10,11 +10,11 @@ import Header from "@/components/Header"
 import LanguageSwitcher from "./components/LanguageSwitcher"
 import { useTranslations } from "next-intl"
 
-interface HomeProps {
+type HomeProps = {
   lang: string
 }
 
-const Home: React.FC<HomeProps> = ({ lang }) => {
+export default function Home({ lang }: HomeProps) {
   const t = useTranslations()
   const router = useRouter()
 
@@ -80,5 +80,3 @@ const Home: React.FC<HomeProps> = ({ lang }) => {
     </div>
   )
 }
-
-export default Home

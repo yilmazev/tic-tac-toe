@@ -11,7 +11,7 @@ interface SelectProps {
 }
 
 const Select: React.FC<SelectProps> = ({ id, value, className, onChange, options }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [ isOpen, setIsOpen ] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Select: React.FC<SelectProps> = ({ id, value, className, onChange, options
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [ref])
+  }, [ ref ])
 
   const handleOptionClick = (optionValue: string) => {
     onChange(optionValue)

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import { useRouter } from "next/navigation"
 
-const Game: React.FC = () => {
+export default function Game() {
   const router = useRouter()
   const { mode, loadPlayerNames } = useGameStore()
 
@@ -29,5 +29,3 @@ const Game: React.FC = () => {
     </div>
   )
 }
-
-export default Game
