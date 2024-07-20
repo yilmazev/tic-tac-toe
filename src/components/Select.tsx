@@ -11,7 +11,7 @@ interface SelectProps {
 }
 
 const Select: React.FC<SelectProps> = ({ id, value, className, onChange, options }) => {
-  const [ isOpen, setIsOpen ] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Select: React.FC<SelectProps> = ({ id, value, className, onChange, options
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [ ref ])
+  }, [ref])
 
   const handleOptionClick = (optionValue: string) => {
     onChange(optionValue)
@@ -40,7 +40,7 @@ const Select: React.FC<SelectProps> = ({ id, value, className, onChange, options
         onClick={() => setIsOpen(!isOpen)}
       >
         {options.find(option => option.value === value)?.label}
-        <SolChevronDownIcon className="size-6" />
+        <SolChevronDownIcon className="size-5" />
       </div>
       {isOpen && (
         <div className="absolute mt-1 w-full divide-y-2 divide-primary-400 rounded-[14px] border-2 border-primary-400 bg-primary-400/30">
