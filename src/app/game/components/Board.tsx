@@ -8,6 +8,7 @@ import Modal from "@/components/Modal"
 import ModalTryAgainIcon from "@/icons/modal-try-again.svg"
 import PlayerXIcon from "@/icons/player-x.svg"
 import PlayerOIcon from "@/icons/player-o.svg"
+import { useTranslations } from "next-intl"
 
 type Cell = "X" | "O" | null
 
@@ -16,6 +17,7 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = ({ mode }) => {
+  const t = useTranslations()
   const router = useRouter()
 
   const [ board, setBoard ] = useState<Cell[]>(Array(9).fill(null))
@@ -24,6 +26,7 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
   const [ isXNext, setIsXNext ] = useState(true)
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ winner, setWinner ] = useState<string | null>(null)
+  const [ winningCells, setWinningCells ] = useState<number[] | null>(null)
 
   const { player1Name, player2Name } = useGameStore()
 
@@ -71,14 +74,23 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
     }
 
     setBoard(newBoard)
-    const winner = calculateWinner(newBoard)
-    if (winner) {
-      setWinner(winner === "X" ? player1Name : player2Name)
-      setIsModalOpen(true)
+    const winningCells = calculateWinner(newBoard)
+    if (winningCells) {
+      if (mode === "bot") {
+        setWinner(isXNext ? "X" : "Bot")
+      } else {
+        setWinner(isXNext ? player1Name : player2Name)
+      }
+      setWinningCells(winningCells)
+      setTimeout(() => {
+        setIsModalOpen(true)
+      }, 1000)
     }
   }
 
   const botMove = (currentBoard: Cell[]) => {
+    if (calculateWinner(currentBoard)) return
+
     const newBoard = currentBoard.slice()
     const newBotMoves = botMoves.slice()
 
@@ -107,10 +119,13 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
     setBotMoves(newBotMoves)
     setIsXNext(true)
 
-    const winner = calculateWinner(newBoard)
-    if (winner) {
-      setWinner(winner === "X" ? player1Name : "Bot")
-      setIsModalOpen(true)
+    const winningCells = calculateWinner(newBoard)
+    if (winningCells) {
+      setWinner("Bot")
+      setWinningCells(winningCells)
+      setTimeout(() => {
+        setIsModalOpen(true)
+      }, 1000)
     }
   }
 
@@ -135,7 +150,7 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
     return null
   }
 
-  const calculateWinner = (board: Cell[]) => {
+  const calculateWinner = (board: Cell[]): number[] | null => {
     const lines = [
       [ 0, 1, 2 ],
       [ 3, 4, 5 ],
@@ -150,11 +165,40 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
     for (let i = 0; i < lines.length; i++) {
       const [ a, b, c ] = lines[i]
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return board[a]
+        return [ a, b, c ]
       }
     }
     return null
   }
+
+  const getModalContent = (mode: "bot" | "pvp", winner: string | null) => {
+    if (mode === "bot") {
+      if (winner === "X") {
+        return {
+          title: t("game.modal.title.congratulations"),
+          description: t("game.modal.desc.congratulations")
+        }
+      } else if (winner === "Bot") {
+        return {
+          title: t("game.modal.title.lose"),
+          description: t("game.modal.desc.lose")
+        }
+      }
+    } else if (mode === "pvp") {
+      return {
+        title: `${t("game.modal.title.congratulations")} ${winner}`,
+        description: t("game.modal.desc.congratulations")
+      }
+    }
+    return {
+      title: t("game.modal.title.game_over"),
+      description: t("game.modal.desc.game_over")
+    }
+  }
+
+  const modalContent = getModalContent(mode, winner)
+
+  const nextMoveIndex = playerMoves.length === 3 ? playerMoves[0] : null
 
   return (
     <div>
@@ -177,29 +221,37 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
       <div className="grid w-fit grid-cols-3 gap-4 rounded-[14px] border-2 border-primary-950 bg-primary-700/70 p-5 shadow-bo">
         {board.map((cell, index) => (
           <div
-            key={index}
             className={clsx(
-              "flex size-[12vh] items-center justify-center rounded-[14px] border-2 border-primary-950 shadow-bo lg:size-[120px]",
-              cell === "X" ? "cursor-default bg-primary-600" :
-                cell === "O" ? "cursor-default bg-primary-600" :
-                  "cursor-pointer bg-primary-400"
+              "rounded-[14px] p-0.5 pb-2", winningCells && winningCells.includes(index) ? "" : (mode === "bot" && isXNext && cell === "X" && index === nextMoveIndex) && "bg-white"
             )}
-            onClick={() => handleClick(index)}
           >
-            {cell === "X"
-              ? <PlayerXIcon className="size-9" />
-              : cell === "O"
-                ? <PlayerOIcon className="size-10" />
-                : null
-            }
+            <div
+              key={index}
+              className={clsx(
+                "flex size-[12vh] items-center justify-center rounded-[14px] border-2 border-primary-950 shadow-bo lg:size-[120px]",
+                winningCells && winningCells.includes(index) ? "bg-shamrock-500" :
+                  cell === "X" && index === nextMoveIndex ? "bg-primary-400" :
+                    cell === "X" ? "cursor-default bg-primary-600" :
+                      cell === "O" ? "cursor-default bg-primary-600" :
+                        "cursor-pointer bg-primary-400"
+              )}
+              onClick={() => handleClick(index)}
+            >
+              {cell === "X"
+                ? <PlayerXIcon className="size-9" />
+                : cell === "O"
+                  ? <PlayerOIcon className="size-10" />
+                  : null
+              }
+            </div>
           </div>
         ))}
       </div>
       <Modal
-        title="Game Over"
-        description={`Congratulations ${winner}! You have won the game with outstanding performance.`}
+        title={modalContent.title}
+        description={modalContent.description}
         icon={<ModalTryAgainIcon className="size-24 lg:size-[120px]" />}
-        btnText="Go home"
+        btnText={t("game.modal.btn.go_home")}
         isOpen={isModalOpen}
         onClose={() => router.push("/")}
       />

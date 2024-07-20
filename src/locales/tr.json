@@ -1,0 +1,31 @@
+{
+  "language": {
+    "en": "ENGLISH",
+    "tr": "TÜRKÇE"
+  },
+  "home": {
+    "single_player": "Tekli Oyuncu",
+    "two_players": "İkili Oyuncu",
+    "start_game": "Oyunu Başlat"
+  },
+  "game": {
+    "modal": {
+      "title": {
+        "congratulations": "Tebrikler",
+        "lose": "Kaybettin!",
+        "game_over": "Oyun Bitti"
+      },
+      "desc": {
+        "congratulations": "Mükemmel bir strateji ile oyunu kazandınız.",
+        "lose": "Bot oyunu kazandı. Bir dahaki sefere iyi şanslar!",
+        "game_over": "Bu oyun sona erdi."
+      },
+      "btn": {
+        "go_home": "Ana Sayfaya Git"
+      }
+    }
+  },
+  "default": {
+    "player": "Oyuncu"
+  }
+}

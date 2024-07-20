@@ -1,0 +1,31 @@
+{
+  "language": {
+    "en": "ENGLISH",
+    "tr": "TÜRKÇE"
+  },
+  "home": {
+    "single_player": "Single Player",
+    "two_players": "Two Players",
+    "start_game": "Start Game"
+  },
+  "game": {
+    "modal": {
+      "title": {
+        "congratulations": "Congratulations",
+        "lose": "You Lost!",
+        "game_over": "Game Over"
+      },
+      "desc": {
+        "congratulations": "You have defeated the bot with outstanding performance. Well done!",
+        "lose": "The bot has won the game. Better luck next time!",
+        "game_over": "The game is over."
+      },
+      "btn": {
+        "go_home": "Go Home"
+      }
+    }
+  },
+  "default": {
+    "player": "Player"
+  }
+}
