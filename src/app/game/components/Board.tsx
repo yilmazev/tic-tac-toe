@@ -20,13 +20,13 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
   const t = useTranslations()
   const router = useRouter()
 
-  const [board, setBoard] = useState<Cell[]>(Array(9).fill(null))
-  const [playerMoves, setPlayerMoves] = useState<number[]>([])
-  const [botMoves, setBotMoves] = useState<number[]>([])
-  const [isXNext, setIsXNext] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [winner, setWinner] = useState<string | null>(null)
-  const [winningCells, setWinningCells] = useState<number[] | null>(null)
+  const [ board, setBoard ] = useState<Cell[]>(Array(9).fill(null))
+  const [ playerMoves, setPlayerMoves ] = useState<number[]>([])
+  const [ botMoves, setBotMoves ] = useState<number[]>([])
+  const [ isXNext, setIsXNext ] = useState(true)
+  const [ isModalOpen, setIsModalOpen ] = useState(false)
+  const [ winner, setWinner ] = useState<string | null>(null)
+  const [ winningCells, setWinningCells ] = useState<number[] | null>(null)
 
   const { player1Name, player2Name } = useGameStore()
 
@@ -131,18 +131,18 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
 
   const findWinningMove = (board: Cell[], player: "X" | "O"): number | null => {
     const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
+      [ 0, 1, 2 ],
+      [ 3, 4, 5 ],
+      [ 6, 7, 8 ],
+      [ 0, 3, 6 ],
+      [ 1, 4, 7 ],
+      [ 2, 5, 8 ],
+      [ 0, 4, 8 ],
+      [ 2, 4, 6 ]
     ]
 
     for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i]
+      const [ a, b, c ] = lines[i]
       if (board[a] === player && board[b] === player && board[c] === null) return c
       if (board[a] === player && board[b] === null && board[c] === player) return b
       if (board[a] === null && board[b] === player && board[c] === player) return a
@@ -152,20 +152,20 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
 
   const calculateWinner = (board: Cell[]): number[] | null => {
     const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
+      [ 0, 1, 2 ],
+      [ 3, 4, 5 ],
+      [ 6, 7, 8 ],
+      [ 0, 3, 6 ],
+      [ 1, 4, 7 ],
+      [ 2, 5, 8 ],
+      [ 0, 4, 8 ],
+      [ 2, 4, 6 ]
     ]
 
     for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i]
+      const [ a, b, c ] = lines[i]
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return [a, b, c]
+        return [ a, b, c ]
       }
     }
     return null
@@ -220,13 +220,13 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
       )}
       <div className="grid w-fit grid-cols-3 gap-4 rounded-[14px] border-2 border-primary-950 bg-primary-700/70 p-5 shadow-bo">
         {board.map((cell, index) => {
-          const isWinningCell = winningCells && winningCells.includes(index);
-          const isNextMove = mode === "bot" && isXNext && cell === "X" && index === nextMoveIndex;
+          const isWinningCell = winningCells && winningCells.includes(index)
+          const isNextMove = mode === "bot" && isXNext && cell === "X" && index === nextMoveIndex
 
           const outerClassName = clsx(
             "rounded-[14px] p-0.5 pb-2",
             isWinningCell ? "" : isNextMove && "bg-white"
-          );
+          )
 
           const innerClassName = clsx(
             "flex size-[12vh] items-center justify-center rounded-[14px] border-2 border-primary-950 shadow-bo lg:size-[120px]",
@@ -236,7 +236,7 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
               "cursor-default bg-primary-600": cell === "X" || cell === "O",
               "cursor-pointer bg-primary-400": !cell
             }
-          );
+          )
 
           return (
             <div key={index} className={outerClassName}>
@@ -245,7 +245,7 @@ const Board: React.FC<BoardProps> = ({ mode }) => {
                 {cell === "O" && <PlayerOIcon className="size-10" />}
               </div>
             </div>
-          );
+          )
         })}
       </div>
       <Modal
