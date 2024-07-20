@@ -10,7 +10,7 @@ import Header from "@/components/Header"
 import LanguageSwitcher from "./components/LanguageSwitcher"
 import { useTranslations } from "next-intl"
 
-type HomeProps = {
+interface HomeProps {
   lang: string
 }
 
